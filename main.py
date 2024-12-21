@@ -1,6 +1,7 @@
 import sys
 import pygame
 from constants import screen
+from machine import Machine
 from player import Player
 from zone import Zone
 
@@ -10,6 +11,7 @@ def main():
     down = Zone('down')
     left = Zone('left')
     right = Zone('right')
+    machine = Machine(10)
 
     pygame.init()
     pygame.display.set_caption("Exit zones")
@@ -41,6 +43,8 @@ def main():
         # Transfer player across zones
         player.transfer(left, right, up, down)
 
+        machine.bullet(player.x, player.y)
+
         # Drawing
         screen.fill((30, 30, 30))
         player.draw_me()
@@ -48,6 +52,8 @@ def main():
         down.draw_me()
         left.draw_me()
         right.draw_me()
+        machine.draw_me()
+        pygame.draw.line(screen, (255, 255, 255), (0,0), (200, 200), 2)
 
         pygame.display.flip()
         clock.tick(60)
